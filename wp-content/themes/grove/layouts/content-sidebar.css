@@ -12,6 +12,13 @@ body{
 	position: relative;
 }
 
+@media screen and (max-width: 800px) {
+	#main, #masthead, .site-info{
+	width: 100%;
+}
+
+}
+
 #primary {
 	float: left;
 	margin: 0px -25% 0 0;

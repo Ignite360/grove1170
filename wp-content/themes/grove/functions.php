@@ -160,13 +160,13 @@ add_action( 'grove_home_after_slider', 'insert_banner' );
 add_action('customize_register', 'child_customize');
 
 //add some custom image sizes
-add_image_size( '960', 960, 9999 );
+add_image_size( '1170', 1170, 9999 );
 add_image_size( '720', 720, 9999 );
 
 
 $args = array(
 	'flex-width'    => false,
-	'width'         => 960,
+	'width'         => 1170,
 	'flex-height'    => true,
 	'height'        => 200,
 	'default-image' => '',
