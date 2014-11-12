@@ -694,9 +694,9 @@ footer.site-footer .footer-text{margin-bottom: 30px;}
 .tweets-container{margin:0 auto 30px auto; width: 1170px; max-width: 95%; overflow: hidden; clear: both;}
 .follow-button{color: #4099FF; font-weight: bold; font-size: 16px; background: rgba(0,0,0,0.1); display: block; width: 30%; height: 50px; line-height: 50px; float: right; text-align: center; padding: 0 2%; -webkit-border-radius: 0 3px 3px 0; border-radius: 0 3px 3px 0;}
 .follow-button i{font-size: 34px; float: left; position: relative; top:5px; left: 5px; color: #aaa;}
-.tweetscroll { width: 660px; height: 50px; overflow: hidden;display: none;}
+.tweetscroll { width: 100%; height: 50px; overflow: hidden;display: none;}
 .tickercontainer { width: 70%; height: 50px; margin: 0; overflow: hidden; float: left;}
-.tickercontainer .mask { position: relative;left: 0px;top: 0px;width: 660px;overflow: hidden;height: 50px; background: #fff;border:1px solid #ddd;-webkit-border-radius: 3px 0px 0px 3px; border-radius: 3px 0px 0px 3px; }
+.tickercontainer .mask { position: relative;left: 0px;top: 0px;width: 100%;overflow: hidden;height: 50px; background: #fff;border:1px solid #ddd;-webkit-border-radius: 3px 0px 0px 3px; border-radius: 3px 0px 0px 3px; }
 ul.tweetscroll { position: relative;left: 665px;font-size:14px;font-weight: bold;list-style-type: none;margin: 0;padding: 0;}
 ul.tweetscroll li {float: left;margin: 0 25px 0 0;padding: 0;height: 50px;line-height: 50px;color: #666;}
 ul.tweetscroll li .tweet-stamp{	font-size:12px;	font-weight: normal;}
