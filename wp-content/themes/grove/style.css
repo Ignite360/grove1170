@@ -6,11 +6,6 @@ Description: A framework for better websites.
 Version: 1170.1
 Tags:
 
-Resetting and rebuilding styles have been helped along thanks to the fine work of
-Eric Meyer http://meyerweb.com/eric/tools/css/reset/index.html
-along with Nicolas Gallagher and Jonathan Neal http://necolas.github.com/normalize.css/
-and Blueprint http://www.blueprintcss.org/
-
 */
 
 
@@ -615,30 +610,28 @@ object {
 .banner-inner h1{font-size: 150%;color: #fff; text-shadow: 2px 2px #333;}
 
 .hotbuttons{width:1170px; clear: both; overflow: auto; margin: 0 auto 30px auto;max-width: 100%;}
-.hotbuttons a{width: 366px; overflow: hidden; margin-right: 3%; display: inline-block; float: left;}
+.hotbuttons a{width: 49%; overflow: hidden; display: inline-block; float: left;}
 .hotbuttons a:last-child{margin:0;}
-.hotbuttons a img{max-width: 366px; display: block;}
+.hotbuttons a img{max-width: 100%; display: block;}
 .hotbuttons a strong{display: block; font-size: 140%; margin: 10px 0 0 0;}
 .hotbuttons a span{color:#666; display: block; margin: 10px 0 0 0;}
-.hotbuttons-4 a{width:279px;max-width: 22%;}
-.hotbuttons-4 a img{max-width: 279px;}
-.hotbuttons-5 a{width:222px; margin-right: 20px;}
-.hotbuttons-5 a img{max-width: 222px;}
-.hotbuttons-2 a{width:555px; margin-right: 30px;}
-.hotbuttons-2 a img{max-width: 555px;}
+.hotbuttons-2 a{width:49%; margin-right: 2%;}
+.hotbuttons-3 a{width:32%; margin-right: 2%;}
+.hotbuttons-4 a{width:23.5%; margin-right: 2%;}
+.hotbuttons-5 a{width:18.4%; margin-right: 2%;}
+
 
 .minifeatures{width:1170px; clear: both; overflow: auto; margin: 0 auto 30px auto;}
-.minifeatures a{width: 366px; overflow: hidden; margin-right: 30px; display: inline-block; float: left;}
+.minifeatures a{width: 49%; overflow: hidden;display: inline-block; float: left;}
 .minifeatures a:last-child{margin:0;}
-.minifeatures a img{max-width: 366px; display: block;}
+.minifeatures a img{max-width: 100%; display: block;}
 .minifeatures a strong{display: block; font-size: 140%; margin: 10px 0 0 0;}
 .minifeatures a span{color:#666; display: block; margin: 10px 0 0 0;}
-.minifeatures-4 a{width:279px; margin-right: 18px;}
-.minifeatures-4 a img{max-width: 279px;}
-.minifeatures-5 a{width:222px; margin-right: 15px;}
-.minifeatures-5 a img{max-width: 222px;}
-.minifeatures-2 a{width:555px; margin-right: 30px;}
-.minifeatures-2 a img{max-width: 555px;}
+.minifeatures-2 a{width:49%; margin-right: 2%;}
+.minifeatures-3 a{width:32%; margin-right: 2%;}
+.minifeatures-4 a{width:23.5%; margin-right: 2%;}
+.minifeatures-5 a{width:18.4%; margin-right: 2%;}
+
 
 
 .homepage-features{float:left; width: 555px; margin: 0 0 60px 0;}
@@ -650,10 +643,10 @@ a.button{background:blue; border-radius:3px; padding:10px 15px; font-weight:bold
 .homepage-featured-content{width:1170px; margin: 0 auto; clear: both; overflow: hidden; background: rgba(0,0,0,0.2); border-radius:3px; margin-top:30px; padding: 30px;}
 .homepage-featured-content h1{font-weight: bold; font-size: 150%; color:#fff;}
 .homepage-featured-content aside{float:left; width:100%;}
-.homepage-featured-content.widgets-2 aside{max-width:49%; margin-right: 2%;}
-.homepage-featured-content.widgets-3 aside{max-width:32%; margin-right: 2%;}
-.homepage-featured-content.widgets-4 aside{max-width:23.5%; margin-right: 2%;}
-.homepage-featured-content.widgets-5 aside{max-width:18.4%; margin-right: 2%;}
+.homepage-featured-content.widgets-2 aside{width:49%; margin-right: 2%;}
+.homepage-featured-content.widgets-3 aside{width:32%; margin-right: 2%;}
+.homepage-featured-content.widgets-4 aside{width:23.5%; margin-right: 2%;}
+.homepage-featured-content.widgets-5 aside{width:18.4%; margin-right: 2%;}
 .homepage-featured-content aside:last-child{margin-right: 0;}
 .homepage-featured-content .widget_text p{margin:1.0em 0;}
 
@@ -676,17 +669,16 @@ footer.site-footer .footer-text{margin-bottom: 30px;}
 .footer-widgets{overflow: auto;margin: 20px auto;}
 .footer-widgets .widget-title{font-weight: bold; margin-bottom: 1.0em;}
 .footer-widgets aside{float:left; width:100%;}
-.footer-widgets.widgets-2 aside{max-width:49%; margin-right: 2%;}
-.footer-widgets.widgets-3 aside{max-width:32%; margin-right: 2%;}
-.footer-widgets.widgets-4 aside{max-width:23.5%; margin-right: 2%;}
-.footer-widgets.widgets-5 aside{max-width:18.4%; margin-right: 2%;}
+.footer-widgets.widgets-2 aside{width:49%; margin-right: 2%;}
+.footer-widgets.widgets-3 aside{width:32%; margin-right: 2%;}
+.footer-widgets.widgets-4 aside{width:23.5%; margin-right: 2%;}
+.footer-widgets.widgets-5 aside{width:18.4%; margin-right: 2%;}
 .footer-widgets aside:last-child{margin-right: 0;}
 .footer-widgets ul{list-style:none; padding: 0; margin:0;}
 .footer-widgets ul li a{display: block; margin: 5px 0; padding: 0 0 5px 0; border-bottom: 1px solid #ddd;}
 .footer-bar{clear:both; position: relative;}
 .footer-bar.bottom{margin-top: 30px;}
 .footer-bar.top{margin-bottom: 15px;}
-
 
 .wooslider-control-paging li a{background:rgba(0,0,0,0.2);}
 
@@ -822,5 +814,42 @@ ul.tweetscroll li .tweet-stamp{	font-size:12px;	font-weight: normal;}
 	#primary, #content {
 		margin-right:0px !important;
 	}
+	.small-slider-outer{width:100%; 
+	}
+	.slider{width: 100%;
+	}
+	.banner-inner{width: 100%;
+	}
+	.minifeatures{width: 100%;
+	}
+	.hotbuttons{width:100%;
+	}
+	.tweets-container{width: 100%;
+	}
+	.homepage-featured-content{width:100%;
+	}
 	
+}
+@media screen and (max-width: 480px) {
+	.minifeatures-2 a, 
+	.minifeatures-3 a, 
+	.minifeatures-4 a, 
+	.minifeatures-5 a{width:100%; margin: 0;
+	}
+	.hotbuttons-2 a, 
+	.hotbuttons-3 a, 
+	.hotbuttons-4 a, 
+	.hotbuttons-5 a{width:100%; margin: 0;
+	}
+	.homepage-featured-content.widgets-2 aside,
+	.homepage-featured-content.widgets-3 aside,
+	.homepage-featured-content.widgets-4 aside,
+	.homepage-featured-content.widgets-5 aside{width: 100%;
+	}
+
+	.footer-widgets.widgets-2 aside,
+	.footer-widgets.widgets-3 aside,
+	.footer-widgets.widgets-4 aside,
+	.footer-widgets.widgets-5 aside{width: 100%;
+	}
 }
