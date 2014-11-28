@@ -24,7 +24,7 @@ function grove_customize($wp_customize) {
 
 	public function render_content() { ?>
 	<style type="text/css">select{margin-bottom:20px;}#customize-section-grove_footer ul{padding-top:70px; position: relative;}</style>
-		<a target="_blank" onclick="popupwindow('/wp-admin/widgets.php?chromeless=true', 'Widgets', 980, 800); return false;" href="/wp-admin/widgets.php" style="padding:10px 0; text-align:center; background:#00a99d; color:#fff; border-radius:4px; display:block; margin:10px 0; position:absolute; top:5px;left:20px; width:258px;">Configure Widgets</a>
+		<a target="_blank" onclick="popupwindow('/wp-admin/widgets.php?chromeless=true', 'Widgets', 980, 800); return false;" href="/wp-admin/widgets.php" style="padding:10px 0; text-align:center; background:#00a99d; color:#fff; border-radius:4px; display:block; margin:10px 0; position:relative; top:5px; width:258px;">Configure Widgets</a>
 	<?php }
 	}
 
@@ -33,7 +33,7 @@ function grove_customize($wp_customize) {
 
 	public function render_content() { ?>
 	<style type="text/css">select{margin-bottom:20px;}#customize-section-nav ul{padding-top:70px; position: relative;}</style>
-		<a target="_blank" onclick="popupwindow('/wp-admin/nav-menus.php?chromeless=true', 'Menus', 980, 800); return false;" href="/wp-admin/widgets.php" style="padding:10px 0; text-align:center; background:#00a99d; color:#fff; border-radius:4px; display:block; margin:10px 0; position:absolute; top:5px;left:20px; width:258px;">Configure Navigation Links</a>
+		<a target="_blank" onclick="popupwindow('/wp-admin/nav-menus.php?chromeless=true', 'Menus', 980, 800); return false;" href="/wp-admin/widgets.php" style="padding:10px 0; text-align:center; background:#00a99d; color:#fff; border-radius:4px; display:block; margin:10px 0; position:relative; top:5px; width:258px;">Configure Navigation Links</a>
 	<?php }
 	}
 
@@ -1182,7 +1182,7 @@ class WP_Customize_MiniFeature extends WP_Customize_Control {
 
 	$wp_customize->add_section( 'grove_slider_settings', array(
 		'title'          => 'Slider (Homepage)',
-		'description'	 => 'Manage the main slider on the homepage.',
+		'description'	 => 'Manage the main slider on the homepage. Items with (Posts) will only work if "Pull Slides From" is set to Posts',
 		'priority'       => 42,
 	) );
 
@@ -1192,7 +1192,7 @@ class WP_Customize_MiniFeature extends WP_Customize_Control {
 	) );
 	
 	$wp_customize->add_control( 'slide_type', array(
-	'label'   => 'Pull Slide Show From',
+	'label'   => 'Pull Slides From',
 	'section' => 'grove_slider_settings',
 	'type'    => 'select',
 	'choices'    => array('sliderstype'=>'Slideshows','posttype'=>'Posts'),
@@ -1358,40 +1358,6 @@ class WP_Customize_MiniFeature extends WP_Customize_Control {
     'section' => 'grove_home_banner_text',
     'type'    => 'text',
     ) );
-	
-
-	
-	$wp_customize->add_section( 'grove_countdown_settings', array(
-		'title'          => 'Homepage Event Countdown',
-		'description'	 => 'Countdown settings',
-		'priority'       => 26,
-	) );
-	
-	$wp_customize->add_setting( 'header_countdown_settings', array(
-		'default'        => '',
-		'type'	=> 'option',
-	) );
-	
-	
-	$cdown['No Coundown'] = 'no';
-	$cdownterms = get_terms("tribe_events_cat");
- 		$cdowncount = count($cdownterms);
- 		if ( $cdowncount > 0 ){
-			foreach ( $cdownterms as $cdownterm ) {
-				$cdown[$cdownterm->term_id] = $cdownterm->name;
-			}
-		}
-		
-
-	$wp_customize->add_control( 'header_countdown_settings', array(
-	'label'   => 'Assign An Event Category',
-	'section' => 'grove_countdown_settings',
-	'type'    => 'select',
-	'choices'    => $cdown,
-	) );
-	
-	
-	
 
 	$wp_customize->add_section( 'grove_social_settings', array(
 		'title'          => 'Social Settings',

@@ -58,7 +58,7 @@ $twitterData = get_transient($transName);  ?>
 			});
 		</script>
 
-		<a class="follow-button" href="http://twitter.com/<?php echo get_option('tweet_ticker_user'); ?>"><i class="ss-icon ss-social">Twitter</i>Follow @<?php echo get_option('tweet_ticker_user'); ?></a>
+		<a class="follow-button" href="http://twitter.com/<?php echo get_option('tweet_ticker_user'); ?>"><i class="ss-icon ss-social-regular">Twitter</i>Follow @<?php echo get_option('tweet_ticker_user'); ?></a>
 
 	</div>
 </div>

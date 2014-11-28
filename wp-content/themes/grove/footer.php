@@ -71,7 +71,7 @@
 		<?php do_action( 'grove_after_footer' ); ?>
         
         <div class="credit">
-		<p>Designed by <a href="http://faithhighway.com">faithHighway</a>.</p>
+		<p>Designed and built by <a href="http://faithhighway.com">faithHighway</a>.</p>
 		</div>
 
 	</footer><!-- #colophon .site-footer -->

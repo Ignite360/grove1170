@@ -363,9 +363,9 @@ a:active {
 #gr_mob_nav_trg_icon {
 	float:right;
 	width: 49px;
-	margin-top: -7px;
 	border-left: 1px solid #dfdfdf;
-	padding: 5px 0;
+	font-size: 140%;
+	text-align: center;
 }
 
 .footer-nav {
@@ -408,8 +408,11 @@ a:active {
 	left: 100%;
 	top: 0;
 }
-.main-navigation ul ul a, .footer-nav ul ul a {
+.main-navigation ul ul a {
 	white-space: nowrap;
+}
+.footer-nav ul ul a{
+	display: none;
 }
 .main-navigation ul ul li, .footer-nav ul ul li {
 	width: 100%;
@@ -582,9 +585,9 @@ object {
 .home #main{width:100%}
 
 #masthead{padding: 0 0 60px 0; position: relative; overflow: visible;}
-#masthead .social{position: absolute; top:0; right:0;}
+#masthead .social{position: absolute; bottom:0; right:0;}
 #masthead .social-middle{top:50%; margin-top: -8px;}
-#masthead .social-bottom{bottom:0; top:auto;}
+#masthead .social-top{top:0;bottom: auto;}
 #masthead .site-logo img{height: auto; width: auto; margin: 10px auto;}
 #masthead.image{padding:0;}
 #masthead.image .social-top{top:20px; right:20px;}
@@ -595,9 +598,9 @@ object {
 .social a{margin:0 5px 0 0;}
 .social a:last-child{margin: 0;}
 
-.slider-outer{clear:both;}
-.small-slider-outer{width:1170px; margin:0 auto;}
-.slider{width: 1170px; margin: 0 auto;max-width: 100%;}
+.slider-outer{clear:both;max-width: 1170px;margin: 0 auto;}
+.small-slider-outer{max-width:1170px; margin:0 auto;}
+.slider{max-width: 1170px; margin: 0 auto;max-width: 100%;}
 .slider.half{width:585px; float: right;}
 .wooslider p{margin: 0;}
 .wooslider{border:none !important;}
@@ -609,7 +612,7 @@ object {
 .banner-inner{margin: 0 auto; max-width: 1170px;text-align: center; padding: 20px;}
 .banner-inner h1{font-size: 150%;color: #fff; text-shadow: 2px 2px #333;}
 
-.hotbuttons{width:1170px; clear: both; overflow: auto; margin: 0 auto 30px auto;max-width: 100%;}
+.hotbuttons{max-width:1170px; clear: both; overflow: auto; margin: 0 auto 30px auto;}
 .hotbuttons a{width: 49%; overflow: hidden; display: inline-block; float: left;}
 .hotbuttons a:last-child{margin:0;}
 .hotbuttons a img{max-width: 100%; display: block;}
@@ -621,7 +624,7 @@ object {
 .hotbuttons-5 a{width:18.4%; margin-right: 2%;}
 
 
-.minifeatures{width:1170px; clear: both; overflow: auto; margin: 0 auto 30px auto;}
+.minifeatures{max-width:1170px; clear: both; overflow: auto; margin: 0 auto 30px auto;}
 .minifeatures a{width: 49%; overflow: hidden;display: inline-block; float: left;}
 .minifeatures a:last-child{margin:0;}
 .minifeatures a img{max-width: 100%; display: block;}
@@ -640,7 +643,7 @@ object {
 a.button{background:blue; border-radius:3px; padding:10px 15px; font-weight:bold; display:inline-block; color:#fff; margin-top: 1.5em;}
 
 .homepage-featured-content-outer{width:100%;}
-.homepage-featured-content{width:1170px; margin: 0 auto; clear: both; overflow: hidden; background: rgba(0,0,0,0.2); border-radius:3px; margin-top:30px; padding: 30px;}
+.homepage-featured-content{max-width:1170px; margin: 0 auto; clear: both; overflow: hidden; background: rgba(0,0,0,0.2); border-radius:3px; margin-top:30px; padding: 30px;}
 .homepage-featured-content h1{font-weight: bold; font-size: 150%; color:#fff;}
 .homepage-featured-content aside{float:left; width:100%;}
 .homepage-featured-content.widgets-2 aside{width:49%; margin-right: 2%;}
@@ -683,7 +686,7 @@ footer.site-footer .footer-text{margin-bottom: 30px;}
 .wooslider-control-paging li a{background:rgba(0,0,0,0.2);}
 
 .tweets-container-outer{}
-.tweets-container{margin:0 auto 30px auto; width: 1170px; max-width: 95%; overflow: hidden; clear: both;}
+.tweets-container{margin:0 auto 30px auto; max-width: 1170px; overflow: hidden; clear: both;}
 .follow-button{color: #4099FF; font-weight: bold; font-size: 16px; background: rgba(0,0,0,0.1); display: block; width: 30%; height: 50px; line-height: 50px; float: right; text-align: center; padding: 0 2%; -webkit-border-radius: 0 3px 3px 0; border-radius: 0 3px 3px 0;}
 .follow-button i{font-size: 34px; float: left; position: relative; top:5px; left: 5px; color: #aaa;}
 .tweetscroll { width: 100%; height: 50px; overflow: hidden;display: none;}
@@ -730,17 +733,22 @@ ul.tweetscroll li .tweet-stamp{	font-size:12px;	font-weight: normal;}
 /* COUNTDOWN */
 
 #timer {
-	background:#00d5d2;
-	color:#fff;
-	padding: 20px 20px 10px 20px;
-	font-weight: bold;
-	line-height: 26px;
+	position: absolute;
+	right: 0;
+	background:#E6BE8A;
+	color:#AF1E2C;
+	line-height: 20px;
 	text-align: center;
+	padding: 10px;
 }
 
 #timer a {
 	color:#fff;
 }
+#timer .widget {
+    margin: 0 auto;
+}
+div.tribe-countdown-text{display: none;}
 
 /* jQuery Countdown styles 1.6.3. */
 .hasCountdown {
@@ -803,6 +811,14 @@ ul.tweetscroll li .tweet-stamp{	font-size:12px;	font-weight: normal;}
 	#page{
 		max-width: 95%;
 	}
+	#timer {
+	position: relative;
+	width: 100%;
+	}
+	#timer .widget {
+    margin: 0 auto;
+    max-width: 220px;
+	}
 	#gr_mob_nav_trg {
 		display:block;	
 	}
@@ -851,5 +867,8 @@ ul.tweetscroll li .tweet-stamp{	font-size:12px;	font-weight: normal;}
 	.footer-widgets.widgets-3 aside,
 	.footer-widgets.widgets-4 aside,
 	.footer-widgets.widgets-5 aside{width: 100%;
+	}
+	.footer-nav li {
+		width: 100%;
 	}
 }
