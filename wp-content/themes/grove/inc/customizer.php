@@ -1198,6 +1198,19 @@ class WP_Customize_MiniFeature extends WP_Customize_Control {
 	'choices'    => array('sliderstype'=>'Slideshows','posttype'=>'Posts'),
 	'priority' => 1, 
 	) );
+
+	$wp_customize->add_setting( 'slide_order_by', array(
+	'default'        => '',
+	'type'	=> 'option',
+	) );
+
+	$wp_customize->add_control( 'slide_order_by', array(
+	'label'   => 'Order by (Slideshows)',
+	'section' => 'grove_slider_settings',
+	'type'    => 'select',
+	'choices'    => array('date'=>'Date','menu_order'=>'Menu Order'),
+	'priority' => 2, 
+	) );
 	
 	
 	$wp_customize->add_setting( 'slide_pcat', array(
@@ -1215,7 +1228,7 @@ class WP_Customize_MiniFeature extends WP_Customize_Control {
 	'section' => 'grove_slider_settings',
 	'type'    => 'select',
 	'choices'    => $pcats,
-	'priority' => 2, 
+	'priority' => 3, 
 	) );
 	
 
@@ -1229,7 +1242,7 @@ class WP_Customize_MiniFeature extends WP_Customize_Control {
 	'section' => 'grove_slider_settings',
 	'type'    => 'select',
 	'choices'    => array('left'=>'Align Left','right'=>'Align Right','top'=>'Align Top','bottom'=>'Align Bottom'),
-	'priority' => 3, 
+	'priority' => 4, 
 	) );
 	
 
@@ -1243,21 +1256,9 @@ class WP_Customize_MiniFeature extends WP_Customize_Control {
 	'section' => 'grove_slider_settings',
 	'type'    => 'select',
 	'choices'    => array('false'=>'Dots','true'=>'Thumbnails'),
-	'priority' => 4, 
-	) );
-
-	$wp_customize->add_setting( 'slide_order_by', array(
-		'default'        => '',
-		'type'	=> 'option',
-	) );
-
-	$wp_customize->add_control( 'slide_order_by', array(
-	'label'   => 'Order by (Slideshows)',
-	'section' => 'grove_slider_settings',
-	'type'    => 'select',
-	'choices'    => array('date'=>'Date','menu_order'=>'Menu Order'),
 	'priority' => 5, 
 	) );
+
 
 	$wp_customize->add_setting( 'slide_page', array(
 		'default'        => '',
