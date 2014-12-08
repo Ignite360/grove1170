@@ -1199,16 +1199,16 @@ class WP_Customize_MiniFeature extends WP_Customize_Control {
 	'priority' => 1, 
 	) );
 
-	$wp_customize->add_setting( 'slide_order_by', array(
-	'default'        => '',
-	'type'	=> 'option',
-	) );
+	$slide_categories = get_terms("slide-page"); 
+			foreach ( $slide_categories as $cat ) {
+			$slides[$cat->slug] = $cat->name;
+			 };
 
-	$wp_customize->add_control( 'slide_order_by', array(
-	'label'   => 'Order by (Slideshows)',
+	$wp_customize->add_control( 'slide_page', array(
+	'label'   => 'Choose Slide Group (Slideshows)',
 	'section' => 'grove_slider_settings',
 	'type'    => 'select',
-	'choices'    => array('date'=>'Date','menu_order'=>'Menu Order'),
+	'choices'    => $slides,
 	'priority' => 2, 
 	) );
 	
@@ -1230,6 +1230,19 @@ class WP_Customize_MiniFeature extends WP_Customize_Control {
 	'choices'    => $pcats,
 	'priority' => 3, 
 	) );
+
+	$wp_customize->add_setting( 'slide_num', array(
+	'default'        => '',
+	'type'	=> 'option',
+	) );
+	
+	$wp_customize->add_control( 'slide_num', array(
+	'label'   => 'How Many Slides To Display?',
+	'section' => 'grove_slider_settings',
+	'type'    => 'select',
+	'choices'    => array('1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5','6'=>'6','7'=>'7','8'=>'8','9'=>'9','10'=>'10','11'=>'11','12'=>'12'),
+	'priority' => 4, 
+	) );
 	
 
 	$wp_customize->add_setting( 'slide_text_side', array(
@@ -1242,7 +1255,7 @@ class WP_Customize_MiniFeature extends WP_Customize_Control {
 	'section' => 'grove_slider_settings',
 	'type'    => 'select',
 	'choices'    => array('left'=>'Align Left','right'=>'Align Right','top'=>'Align Top','bottom'=>'Align Bottom'),
-	'priority' => 4, 
+	'priority' => 5, 
 	) );
 	
 
@@ -1256,42 +1269,27 @@ class WP_Customize_MiniFeature extends WP_Customize_Control {
 	'section' => 'grove_slider_settings',
 	'type'    => 'select',
 	'choices'    => array('false'=>'Dots','true'=>'Thumbnails'),
-	'priority' => 5, 
+	'priority' => 6, 
 	) );
 
+	$wp_customize->add_setting( 'slide_order_by', array(
+	'default'        => '',
+	'type'	=> 'option',
+	) );
+
+	$wp_customize->add_control( 'slide_order_by', array(
+	'label'   => 'Order by (Slideshows)',
+	'section' => 'grove_slider_settings',
+	'type'    => 'select',
+	'choices'    => array('date'=>'Date','menu_order'=>'Menu Order'),
+	'priority' => 7, 
+	) );
 
 	$wp_customize->add_setting( 'slide_page', array(
 		'default'        => '',
 		'type'	=> 'option',
 	) );
-
-	$slide_categories = get_terms("slide-page"); 
-			foreach ( $slide_categories as $cat ) {
-			$slides[$cat->slug] = $cat->name;
-			 };
-
-	$wp_customize->add_control( 'slide_page', array(
-	'label'   => 'Choose Slide Group (Slideshows)',
-	'section' => 'grove_slider_settings',
-	'type'    => 'select',
-	'choices'    => $slides,
-	'priority' => 6, 
-	) );
 	
-	
-
-	$wp_customize->add_setting( 'slide_num', array(
-		'default'        => '',
-		'type'	=> 'option',
-	) );
-	
-	$wp_customize->add_control( 'slide_num', array(
-	'label'   => 'How Many Slides To Display?',
-	'section' => 'grove_slider_settings',
-	'type'    => 'select',
-	'choices'    => array('1'=>'1','2'=>'2','3'=>'3','4'=>'4','5'=>'5','6'=>'6','7'=>'7','8'=>'8','9'=>'9','10'=>'10','11'=>'11','12'=>'12'),
-	'priority' => 7, 
-	) );
 	
 	$wp_customize->add_setting( 'slider_linking', array(
 		'default'        => '',
