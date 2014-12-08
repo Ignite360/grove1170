@@ -1199,6 +1199,11 @@ class WP_Customize_MiniFeature extends WP_Customize_Control {
 	'priority' => 1, 
 	) );
 
+	$wp_customize->add_setting( 'slide_page', array(
+		'default'        => '',
+		'type'	=> 'option',
+	) );
+
 	$slide_categories = get_terms("slide-page"); 
 			foreach ( $slide_categories as $cat ) {
 			$slides[$cat->slug] = $cat->name;
@@ -1284,12 +1289,6 @@ class WP_Customize_MiniFeature extends WP_Customize_Control {
 	'choices'    => array('date'=>'Date','menu_order'=>'Menu Order'),
 	'priority' => 7, 
 	) );
-
-	$wp_customize->add_setting( 'slide_page', array(
-		'default'        => '',
-		'type'	=> 'option',
-	) );
-	
 	
 	$wp_customize->add_setting( 'slider_linking', array(
 		'default'        => '',
