@@ -1073,7 +1073,12 @@ class GFCommon{
                     break;
 
                 case "section" :
-                    if((!GFCommon::is_section_empty($field, $form, $lead) || $display_empty) && !rgar($field, "adminOnly")){
+
+					if ( GFFormsModel::is_field_hidden( $form, $field, array(), $lead ) ){
+						continue;
+					}
+
+                    if ( ( ! GFCommon::is_section_empty( $field, $form, $lead ) || $display_empty ) && !rgar( $field, "adminOnly" ) ) {
 
                         switch($format){
                             case "text" :
@@ -3356,7 +3361,7 @@ class GFCommon{
                 $onchange= rgar($field,"passwordStrengthEnabled") ? "onchange='{$action}'" : "";
                 $onkeyup = rgar($field,"passwordStrengthEnabled") ? "onkeyup='{$action}'" : "";
 
-				$pass = rgar($value, $id );
+				$pass = is_array( $value ) ? rgar( $value, $id ) : $value;
                 $confirm_pass = RGForms::post("input_" . $id ."_2");
                 return sprintf("<div class='ginput_complex$class_suffix ginput_container' id='{$field_id}_container'><span id='" . $field_id . "_1_container' class='ginput_left'><input type='password' name='input_%d' id='%s' {$onkeyup} {$onchange} value='%s' $first_tabindex %s/><label for='%s'>" . apply_filters("gform_password_{$form_id}", apply_filters("gform_password",__("Enter Password", "gravityforms"), $form_id), $form_id) . "</label></span><span id='" . $field_id . "_2_container' class='ginput_right'><input type='password' name='input_%d_2' id='%s_2' {$onkeyup} {$onchange} value='%s' $last_tabindex %s/><label for='%s_2'>" . apply_filters("gform_password_confirm_{$form_id}", apply_filters("gform_password_confirm",__("Confirm Password", "gravityforms"), $form_id), $form_id) . "</label></span><div class='gf_clear gf_clear_complex'></div></div>{$strength}", $id, $field_id, esc_attr($pass), $disabled_text, $field_id, $id, $field_id, esc_attr($confirm_pass), $disabled_text, $field_id);
 
@@ -3935,7 +3940,9 @@ class GFCommon{
 
                 $has_columns = is_array(rgar($field, "choices"));
                 $columns = $has_columns ? rgar($field, "choices") : array(array());
-                $label_target_shim = sprintf( '<input type=\'text\' id=\'input_%1$s_%2$s_shim\' style=\'position:absolute;left:-999em;\' onfocus=\'jQuery( "#field_%1$s_%2$s table tr td:first-child input" ).focus();\' />', $form_id, $field['id'] );
+
+	            $shim_style = is_rtl() ? 'position:absolute;left:999em;' : 'position:absolute;left:-999em;';
+	            $label_target_shim = sprintf( '<input type=\'text\' id=\'input_%1$s_%2$s_shim\' style=\'%3$s\' onfocus=\'jQuery( "#field_%1$s_%2$s table tr td:first-child input" ).focus();\' />', $form_id, $field['id'], $shim_style );
 
                 $list = "<div class='ginput_container ginput_list'>" .
                         $label_target_shim .

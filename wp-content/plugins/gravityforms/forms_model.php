@@ -2036,27 +2036,33 @@ class GFFormsModel {
             case "fileupload" :
                 if(rgar($field, "multipleFiles")){
 
-                    if(isset(GFFormsModel::$uploaded_files[$form_id][$input_name])){
-                        $uploaded_temp_files = GFFormsModel::$uploaded_files[$form_id][$input_name];
-                        $uploaded_files = array();
-                        foreach($uploaded_temp_files as $i => $file_info){
-                            $temp_filepath = self::get_upload_path($form_id) . "/tmp/" . $file_info["temp_filename"];
-                            if($file_info && file_exists($temp_filepath)){
-                                $uploaded_files[$i] = self::move_temp_file($form_id, $file_info);
-                            }
-                        }
+	                global $_gf_uploaded_files;
 
-                        if(!empty($value)){ // merge with existing files (admin edit entry)
-                            $value = json_decode($value, true);
-                            $value = array_merge($value, $uploaded_files);
-                            $value = json_encode($value);
-                        } else {
-                            $value = json_encode($uploaded_files);
-                        }
+	                if ( isset( $_gf_uploaded_files[ $input_name ] ) ) {
+		                $value = $_gf_uploaded_files[ $input_name ];
+	                } else {
+		                if ( isset( GFFormsModel::$uploaded_files[ $form_id ][ $input_name ] ) ) {
+			                $uploaded_temp_files = GFFormsModel::$uploaded_files[ $form_id ][ $input_name ];
+			                $uploaded_files      = array();
+			                foreach ( $uploaded_temp_files as $i => $file_info ) {
+				                $temp_filepath = self::get_upload_path( $form_id ) . '/tmp/' . $file_info['temp_filename'];
+				                if ( $file_info && file_exists( $temp_filepath ) ) {
+					                $uploaded_files[ $i ] = self::move_temp_file( $form_id, $file_info );
+				                }
+			                }
 
-                    } else {
-                        $value = "";
-                    }
+			                if ( ! empty( $value ) ) { // merge with existing files (admin edit entry)
+				                $value = json_decode( $value, true );
+				                $value = array_merge( $value, $uploaded_files );
+				                $value = json_encode( $value );
+			                } else {
+				                $value = json_encode( $uploaded_files );
+			                }
+		                } else {
+			                $value = '';
+		                }
+		                $_gf_uploaded_files[ $input_name ] = $value;
+	                }
 
                 } else {
                     $value = self::get_fileupload_value($form_id, $input_name);
@@ -4174,7 +4180,7 @@ class GFFormsModel {
 								$choice_texts_clauses_for_field = array();
 								if ( isset( $field['choices'] ) && is_array( $field['choices'] ) ) {
 									foreach ( $field['choices'] as $choice ) {
-										if ( ( $operator == '=' && strtolower( $choice['text'] ) == strtolower( $val ) ) || ( $operator == 'like' && strpos( strtolower( $choice['text'] ), strtolower( $val ) ) !== false ) ) {
+										if ( ( $operator == '=' && strtolower( $choice['text'] ) == strtolower( $val ) ) || ( $operator == 'like' && ! empty( $val ) && strpos( strtolower( $choice['text'] ), strtolower( $val ) ) !== false ) ) {
 											if ( rgar( $field, 'gsurveyLikertEnableMultipleRows' ) ){
 												$choice_value =  '%' . $choice['value'] . '%' ;
 												$choice_search_operator = 'like';
