@@ -157,8 +157,6 @@ function insert_banner() {
 
 add_action( 'grove_home_after_slider', 'insert_banner' );
 
-add_action('customize_register', 'child_customize');
-
 //add some custom image sizes
 add_image_size( '1170', 1170, 9999 );
 add_image_size( '720', 720, 9999 );
