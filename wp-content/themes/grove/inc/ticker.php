@@ -13,7 +13,7 @@ function getConnectionWithAccessToken($oauth_token, $oauth_token_secret) {
   return $connection;
 }
  
-$connection = getConnectionWithAccessToken("20116892-cLYQ0j6hlboeu5PZoZRSxHyeoWuqPXdmJeHHpy6Wc", "MoJXm52SDjQolyRkPwa9G8gFek4c0nyFItUXJ1s0q8");
+$connection = getConnectionWithAccessToken($oauth_token, $oauth_token_secret);
 
  $twitterData = $connection->get(
 	'statuses/user_timeline',
@@ -58,7 +58,7 @@ $twitterData = get_transient($transName);  ?>
 			});
 		</script>
 
-		<a class="follow-button" href="http://twitter.com/<?php echo get_option('tweet_ticker_user'); ?>"><i class="ss-icon ss-social-regular">Twitter</i>Follow @<?php echo get_option('tweet_ticker_user'); ?></a>
+		<a class="follow-button" href="http://twitter.com/<?php echo get_option('tweet_ticker_user'); ?>"><i class="ss-icon ss-social">Twitter</i>Follow @<?php echo get_option('tweet_ticker_user'); ?></a>
 
 	</div>
 </div>
