@@ -588,7 +588,7 @@ object {
 #masthead .social{position: absolute; bottom:0; right:0;}
 #masthead .social-middle{top:50%; margin-top: -8px;}
 #masthead .social-top{top:0;bottom: auto;}
-#masthead .site-logo img{height: auto; width: auto; margin: 10px auto;}
+#masthead .site-logo img{height: auto; width: auto; margin: 10px auto;vertical-align: top;}
 #masthead.image{padding:0;}
 #masthead.image .social-top{top:20px; right:20px;}
 #masthead.image .social-middle{right:20px;}
