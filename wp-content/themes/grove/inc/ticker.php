@@ -9,11 +9,11 @@ if(false === ($twitterData = get_transient($transName) ) ){
      require_once 'twitteroauth/twitteroauth.php';
 
 function getConnectionWithAccessToken($oauth_token, $oauth_token_secret) {
-  $connection = new TwitterOAuth('Pmxb6TgS8g7e97Ht080eQ', 'PzvJJumF5y3KOMjbsTiDyicEBI8i65MxbUwX5Wgea0', $oauth_token, $oauth_token_secret);
+  $connection = new TwitterOAuth('sclk3oFuhnmNvUAia1ZdVYmCy', 'llk3osQe8cWxrmj21yBKvhrn0Aamu7OLuzk2enzGQo3fzOaH3i', $oauth_token, $oauth_token_secret);
   return $connection;
 }
  
-$connection = getConnectionWithAccessToken($oauth_token, $oauth_token_secret);
+$connection = getConnectionWithAccessToken('16301382-3L0VsDdzsaXIFZ2rykzfrhCx3IipNbnrFKZK6qqeR', 'OX7om9T9St6j2U8vtrn5lQiCo4JCzsSkCqP08J1DJR7j6');
 
  $twitterData = $connection->get(
 	'statuses/user_timeline',
