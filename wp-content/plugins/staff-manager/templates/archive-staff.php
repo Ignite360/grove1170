@@ -9,7 +9,7 @@
  */
 
 get_header(); ?>
-
+<?php the_post_thumbnail(  ) ?>
 		<section id="primary" class="full-page-primary">
 			<div id="content-full" class="full-page-content" role="main">
 				<?php echo $image; ?>

@@ -5,7 +5,7 @@ Plugin URI: http://www.faithhighway.com
 Description: Creates a custom post type to insert and manage your staff
 Author: Faith Highway
 Author URI: http://www.faithhighway.com
-Version: 1.0
+Version: 1.2
 */
 
 if ( !class_exists('fh_staff_manager' ) ):
@@ -18,6 +18,7 @@ class fh_staff_manager {
 
 		add_action( 'admin_menu', array( __CLASS__, 'settings_page' ) );
 		add_action( 'admin_init', array( __CLASS__, 'save_settings' ) );
+		add_action( 'admin_head', array( __CLASS__, 'admin_head' ) );
 
 		add_action( 'wp_head', array( __CLASS__, 'custom_styles' ) );
 		add_action( 'wp_enqueue_scripts', array( __CLASS__, 'enqueue_staff_css' ) );
@@ -27,6 +28,7 @@ class fh_staff_manager {
 
 		add_filter( 'single_template', array( __CLASS__, 'staff_single' ) );
 		add_filter( 'archive_template', array( __CLASS__, 'staff_archive' ) );
+		add_filter( 'post_thumbnail_html', array( __CLASS__, 'post_thumbnail_html' ), 10, 5 );
 
 		add_shortcode( 'staff', array( __CLASS__, 'display_staff_archive' ) );
 
@@ -77,9 +79,16 @@ class fh_staff_manager {
 						<td><input type="text" name="staff_base" value="<?php echo get_option( 'staff_base' ); ?>" class="regular-text"></td>
 					</tr>
 					<tr>
+						<th scope="row"><label for="banner_id">Staff featured image ID</label></th>
+						<td>
+							<input type="text" name="banner_id" id="banner_id" value="<?php echo get_option( 'banner_id' ); ?>" class="regular-text"> <button id="banner_media">Find image</button>
+							<div><small class="description"><i style="font-weight: bold; color: red;">Enter the ID number of the media file to use as the featured image</i></small></div>
+						</td>
+					</tr>
+					<tr>
 						<th scope="row"><label for="icon_url">Custom Icon</label></th>
 						<td>
-							<input type="text" name="icon_url" value="<?php echo get_option( 'icon_url' ); ?>" class="regular-text">
+							<input type="text" name="icon_url" id="icon_url" value="<?php echo get_option( 'icon_url' ); ?>" class="regular-text"> <button id="icon_media">Find image</button>
 							<div><small class="description"><i>Image should be 31px by 31px</i></small></div>
 						</td>
 					</tr>
@@ -116,6 +125,7 @@ class fh_staff_manager {
 
 			update_option( 'staff_base', $_POST['staff_base'] );
 			update_option( 'icon_url', $_POST['icon_url'] );
+			update_option( 'banner_id', $_POST['banner_id'] );
 			update_option( 'small_image_width', $_POST['small_image_width'] );
 			update_option( 'small_image_height', $_POST['small_image_height'] );
 			update_option( 'single_image_width', $_POST['single_image_width'] );
@@ -129,8 +139,14 @@ class fh_staff_manager {
 		}
 	}
 
-	static function custom_styles()
-	{
+	static function admin_head() {
+
+		wp_enqueue_media();
+		wp_enqueue_script( 'staff', plugins_url( 'assets/staff.js', __FILE__ ), array( 'jquery' ), '1.0', true );
+	}
+
+	static function custom_styles() {
+
 		?>
 		<style>
 			section.staff figure {
@@ -369,6 +385,15 @@ class fh_staff_manager {
 		// Update the meta field in the database.
 		update_post_meta( $post_id, '_job_title', $job_title );
 		update_post_meta( $post_id, '_contact_email', $contact_email );
+	}
+
+	function post_thumbnail_html( $html, $post_id, $post_thumbnail_id, $size, $attr ) {
+
+		if( (is_archive( get_option( 'staff_base' ) ) && !in_the_loop()) && $banner_id = get_option( 'banner_id' ) )
+			return wp_get_attachment_image( $banner_id, $size, false, $attr );
+		
+
+		return $html;
 	}
 }
 
