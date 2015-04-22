@@ -216,3 +216,8 @@ function remove_wooslider_url_box()
 {
 	remove_meta_box( 'wooslider-url', 'slide', 'side' ); // Remove Edit Flow Editorial Metadata
 }
+
+add_action( 'after_setup_theme', 'woocommerce_support' );
+function woocommerce_support() {
+    add_theme_support( 'woocommerce' );
+}
