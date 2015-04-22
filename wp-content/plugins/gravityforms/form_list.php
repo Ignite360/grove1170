@@ -99,11 +99,17 @@ class GFFormList {
 					break;
 			}
 
-			if ( isset( $message ) )
+			if ( isset( $message ) ) {
 				$message = sprintf( $message, $form_count );
-
+			}
 		}
 		$sort_column    = empty( $_GET['sort'] ) ? 'title' : $_GET['sort'];
+		$db_columns = GFFormsModel::get_form_db_columns();
+
+		if ( ! in_array( strtolower( $sort_column ), $db_columns ) ) {
+			$sort_column = 'title';
+		}
+
 		$sort_direction = empty( $_GET['dir'] ) ? 'ASC' : $_GET['dir'];
 		$active         = RGForms::get( 'active' ) == '' ? null : RGForms::get( 'active' );
 		$trash          = RGForms::get( 'trash' ) == '' ? false : RGForms::get( 'trash' );
@@ -112,107 +118,17 @@ class GFFormList {
 
 		$form_count = RGFormsModel::get_form_count();
 
-		// - new form modal - //
-
 		wp_print_styles( array( 'thickbox' ) );
 
-		/*wp_enqueue_script( 'form_admin' );
-		wp_print_scripts( array( 'form_admin' ) );*/
+		add_action( 'admin_print_footer_scripts', array( __class__, 'output_form_list_script_block' ), 20 );
+
+		$min = defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || isset( $_GET['gform_debug'] ) ? '' : '.min';
 
 		?>
 
 		<script type="text/javascript">
-
-			jQuery(document).ready(function ($) {
-
-				<?php if ( rgget( 'page' ) == 'gf_new_form' ): ?>
-				loadNewFormModal();
-				<?php endif; ?>
-
-				$('.gf_form_action_has_submenu').hover(function () {
-					var l = jQuery(this).offset().left;
-					jQuery(this).find('.gf_submenu')
-						.toggle()
-						.offset({ left: l });
-				}, function () {
-					jQuery(this).find('.gf_submenu').hide();
-				});
-
-
-			});
-
-			function loadNewFormModal() {
-				resetNewFormModal();
-				tb_show('<?php _e( 'Create a New Form', 'gravityforms' ); ?>', '#TB_inline?width=375&amp;inlineId=gf_new_form_modal');
-				jQuery('#new_form_title').focus();
-				return false;
-			}
-
-			function saveNewForm() {
-
-				var createButton = jQuery('#save_new_form');
-				var spinner = new gfAjaxSpinner(createButton, gf_vars.baseUrl + '/images/spinner.gif');
-
-				// clear error message
-				jQuery('#gf_new_form_error_message').html('');
-
-				var origVal = createButton.val();
-				createButton.val('<?php _e( 'Creating Form...', 'gravityforms' ); ?>');
-
-				var form = {
-					title               : jQuery('#new_form_title').val(),
-					description         : jQuery('#new_form_description').val(),
-					labelPlacement      : 'top_label',
-					descriptionPlacement: 'below',
-					button              : {
-						type    : 'text',
-						text    : '<?php _e( 'Submit', 'gravityforms' ) ?>',
-						imageUrl: ''
-					},
-					fields              : []
-				}
-
-				jQuery.post(ajaxurl, {
-					form            : jQuery.toJSON(form),
-					action          : 'gf_save_new_form',
-					gf_save_new_form: '<?php echo wp_create_nonce( 'gf_save_new_form' ); ?>'
-				}, function (response) {
-
-					spinner.destroy();
-
-					var respData = jQuery.parseJSON(response);
-
-					if (respData['error']) {
-						// adding class later otherwise WP moves box up to the top of the page
-						jQuery('#gf_new_form_error_message').html(respData.error);
-						addInputErrorIcon('#new_form_title');
-						createButton.val(origVal);
-					} else {
-						location.href = respData.redirect;
-						createButton.val('<?php _e( 'Saved! Redirecting...', 'gravityforms' ); ?>');
-					}
-
-				});
-
-			}
-
-			function resetNewFormModal() {
-				jQuery('#new_form_title').val('');
-				jQuery('#new_form_description').val('');
-				jQuery('#gf_new_form_error_message').html('');
-				removeInputErrorIcons('.gf_new_form_modal_container');
-			}
-
-			function addInputErrorIcon(elem) {
-				var elem = jQuery(elem);
-				elem.before('<span class="gf_input_error_icon"></span>');
-			}
-
-			function removeInputErrorIcons(elem) {
-				var elem = jQuery(elem);
-				elem.find('span.gf_input_error_icon').remove();
-			}
-
+			// checked by the ToggleActive method to prevent errors when form status icon is clicked before page has fully loaded
+			var gfPageLoaded = false;
 		</script>
 
 		<style type="text/css">
@@ -263,6 +179,9 @@ class GFFormList {
 				top: 5px;
 				left: 5px;
 			}
+
+			.gf_not_ready { opacity: 0.25; }
+
 		</style>
 
 		<div id="gf_new_form_modal" style="display:none;">
@@ -315,6 +234,11 @@ class GFFormList {
 			}
 
 			function ToggleActive(img, form_id) {
+
+				if( ! gfPageLoaded ) {
+					return;
+				}
+
 				var is_active = img.src.indexOf("active1.png") >= 0
 				if (is_active) {
 					img.src = img.src.replace("active1.png", 'active0.png');
@@ -361,7 +285,7 @@ class GFFormList {
 			}
 		</script>
 
-		<link rel="stylesheet" href="<?php echo GFCommon::get_base_url() ?>/css/admin.css" />
+		<link rel="stylesheet" href="<?php echo GFCommon::get_base_url() ?>/css/admin<?php echo $min; ?>.css" />
 		<div class="wrap <?php echo GFCommon::get_browser_class() ?>">
 
 		<h2>
@@ -380,15 +304,15 @@ class GFFormList {
 
 		<ul class="subsubsub">
 			<li>
-				<a class="<?php echo ( $active === null ) ? 'current' : '' ?>" href="?page=gf_edit_forms"><?php _e( 'All', 'gravityforms' ); ?>
+				<a class="<?php echo ( $active === null ) ? 'current' : '' ?>" href="?page=gf_edit_forms"><?php _ex( 'All', 'Form List', 'gravityforms' ); ?>
 					<span class="count">(<span id="all_count"><?php echo $form_count['total'] ?></span>)</span></a> |
 			</li>
 			<li>
-				<a class="<?php echo $active == '1' ? 'current' : '' ?>" href="?page=gf_edit_forms&active=1"><?php _e( 'Active', 'gravityforms' ); ?>
+				<a class="<?php echo $active == '1' ? 'current' : '' ?>" href="?page=gf_edit_forms&active=1"><?php _ex( 'Active', 'Form List', 'gravityforms' ); ?>
 					<span class="count">(<span id="active_count"><?php echo $form_count['active'] ?></span>)</span></a> |
 			</li>
 			<li>
-				<a class="<?php echo $active == '0' ? 'current' : '' ?>" href="?page=gf_edit_forms&active=0"><?php _e( 'Inactive', 'gravityforms' ); ?>
+				<a class="<?php echo $active == '0' ? 'current' : '' ?>" href="?page=gf_edit_forms&active=0"><?php _ex( 'Inactive', 'Form List', 'gravityforms' ); ?>
 					<span class="count">(<span id="inactive_count"><?php echo $form_count['inactive'] ?></span>)</span></a> |
 			</li>
 			<li>
@@ -505,7 +429,7 @@ class GFFormList {
 
 						<td>
 							<?php if ( ! $trash ) : ?>
-								<img class="gform_active_icon" src="<?php echo GFCommon::get_base_url() ?>/images/active<?php echo intval( $form->is_active ) ?>.png" style="cursor: pointer;" alt="<?php echo $form->is_active ? __( 'Active', 'gravityforms' ) : __( 'Inactive', 'gravityforms' ); ?>" title="<?php echo $form->is_active ? __( 'Active', 'gravityforms' ) : __( 'Inactive', 'gravityforms' ); ?>" onclick="ToggleActive(this, <?php echo $form->id ?>); " />
+								<img class="gform_active_icon gf_not_ready" src="<?php echo GFCommon::get_base_url() ?>/images/active<?php echo intval( $form->is_active ) ?>.png" style="cursor: pointer;" alt="<?php echo $form->is_active ? __( 'Active', 'gravityforms' ) : __( 'Inactive', 'gravityforms' ); ?>" title="<?php echo $form->is_active ? __( 'Active', 'gravityforms' ) : __( 'Inactive', 'gravityforms' ); ?>" onclick="ToggleActive(this, <?php echo $form->id ?>); " />
 							<?php endif ?>
 						</td>
 						<td class="column-id"><?php echo $form->id ?></td>
@@ -673,6 +597,111 @@ class GFFormList {
 				$form_id = abs( $result['status'] );
 				die( json_encode( array( 'redirect' => admin_url( "admin.php?page=gf_edit_forms&id={$form_id}" ) ) ) );
 		}
+	}
+
+	public static function output_form_list_script_block() {
+		?>
+
+		<script type="text/javascript">
+
+			jQuery( document ).ready( function( $ ) {
+
+				// load new form modal on New Form page
+				<?php if(rgget('page') == 'gf_new_form'): ?>
+				loadNewFormModal();
+				<?php endif; ?>
+
+				// form settings submenu support
+				$('.gf_form_action_has_submenu').hover(function(){
+					var l = jQuery(this).offset().left;
+					jQuery(this).find('.gf_submenu')
+						.toggle()
+						.offset({ left: l });
+				}, function(){
+					jQuery(this).find('.gf_submenu').hide();
+				});
+
+				// enable form status icons
+				gfPageLoaded = true;
+				$( '.gform_active_icon' ).removeClass( 'gf_not_ready' );
+
+			} );
+
+			function loadNewFormModal() {
+				resetNewFormModal();
+				tb_show('<?php _e('Create a New Form', 'gravityforms'); ?>', '#TB_inline?width=375&amp;inlineId=gf_new_form_modal');
+				jQuery('#new_form_title').focus();
+				return false;
+			}
+
+			function saveNewForm() {
+
+				var createButton = jQuery('#save_new_form');
+				var spinner = new gfAjaxSpinner(createButton, gf_vars.baseUrl + '/images/spinner.gif');
+
+				// clear error message
+				jQuery('#gf_new_form_error_message').html('');
+
+				var origVal = createButton.val();
+				createButton.val('<?php _e('Creating Form...', 'gravityforms'); ?>');
+
+				var form = {
+					title: jQuery('#new_form_title').val(),
+					description: jQuery('#new_form_description').val(),
+					labelPlacement:'top_label',
+					descriptionPlacement:'below',
+					button: {
+						type: 'text',
+						text: '<?php _e("Submit", "gravityforms") ?>',
+						imageUrl : ''
+					},
+					fields:[]
+				}
+
+				jQuery.post(ajaxurl, {
+					form: jQuery.toJSON(form),
+					action: 'gf_save_new_form',
+					gf_save_new_form: '<?php echo wp_create_nonce('gf_save_new_form'); ?>'
+				}, function(response){
+
+					spinner.destroy();
+
+					var respData = jQuery.parseJSON(response);
+
+					if(respData['error']) {
+						// adding class later otherwise WP moves box up to the top of the page
+						jQuery('#gf_new_form_error_message').html( respData.error );
+						addInputErrorIcon( '#new_form_title' );
+						createButton.val(origVal);
+					} else {
+						location.href = respData.redirect;
+						createButton.val('<?php _e('Saved! Redirecting...', 'gravityforms'); ?>');
+					}
+
+				});
+
+			}
+
+			function resetNewFormModal() {
+				jQuery('#new_form_title').val('');
+				jQuery('#new_form_description').val('');
+				jQuery('#gf_new_form_error_message').html('');
+				removeInputErrorIcons( '.gf_new_form_modal_container' );
+			}
+
+			function addInputErrorIcon( elem ) {
+				var elem = jQuery(elem);
+				elem.before( '<span class="gf_input_error_icon"></span>');
+			}
+
+			function removeInputErrorIcons( elem ) {
+				var elem = jQuery(elem);
+				elem.find('span.gf_input_error_icon').remove();
+			}
+
+		</script>
+
+	<?php
 	}
 
 }
