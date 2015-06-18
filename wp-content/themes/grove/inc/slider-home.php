@@ -4,7 +4,6 @@
 	<div class="slider half">
 	<?php echo do_shortcode('[wooslider slide_page="'.get_option("slide_page").'" slider_type="slides" thumbnails="thumbnails" order="DESC" order_by="menu_order" limit="5"]') ?>
 	</div>
-[wooslider slide_page="homepage" slider_type="slides" ]
 	
 	<div class="homepage-features">
 	<?php echo get_option('slide_feature_static') ?>
