@@ -47,12 +47,7 @@
 				'required'  => true,
 			),
 	 
-			array(
-				'name'	  => 'Make Clickable Tweet',
-				'slug'	  => 'make-clickable-tweet',
-				'required'  => true,
-			),
-			
+
 			array(
 				'name'	  => 'Social Bartender',
 				'slug'	  => 'social-bartender',

@@ -32,12 +32,9 @@ function grove_setup() {
 	require( get_template_directory() . '/inc/template-tags.php' );
 
 	require( get_template_directory() . '/inc/metabox/functions.php' );
-
-	require_once ( get_template_directory() . '/inc/make-content.php' );
 	
 	/* implementation of TGM Plugin activation */
 	require_once ( get_template_directory() . '/inc/plugin-mgmt/pluginmgr.php' );
-
 
 	/**
 	 * Custom functions that act independently of the theme templates
@@ -47,7 +44,7 @@ function grove_setup() {
 	/**
 	 * Custom Theme Options
 	 */
-	//require( get_template_directory() . '/inc/theme-options/theme-options.php' );
+	require( get_template_directory() . '/inc/theme-options/theme-options.php' );
 
 	/**
 	 * Make theme available for translation
@@ -132,7 +129,6 @@ add_action( 'widgets_init', 'grove_widgets_init' );
  */
 function grove_scripts() {
 
-	if (get_option('body-font') == "Open Sans") { wp_enqueue_style( 'Open Sans', 'http://fonts.googleapis.com/css?family=Open+Sans:400,700'); }
 	wp_enqueue_style( 'style', get_stylesheet_uri() );
 	wp_enqueue_style( 'layout', get_template_directory_uri() . '/layouts/content-sidebar.css');
 
@@ -183,26 +179,15 @@ add_theme_support( 'custom-background', $defaults );
 
 add_action ('admin_menu', 'theme_customize');
 function theme_customize() {
-	add_menu_page( 'Grove', 'Grove', 'edit_theme_options', 'Grove', 'grove_parent', site_url().'/wp-content/mu-plugins/inc/icon-ignite.png', 3 );
+	add_menu_page( 'Grove', 'Grove', 'edit_theme_options', 'Grove', 'grove_parent', 'dashicons-palmtree', 3 );
 	add_submenu_page('Grove', 'Customize', 'Customize', 'edit_theme_options', 'customize.php?', '');
 }
 
 function grove_parent() {
-	echo '<div class="wrap"><h3>Enjoy your stay in the Grove.</h3><p style="max-width:600px">This site is built on Grove, a brand-new WordPress framework from faithHighway. While we\'re still kicking the tires, we\'re thrilled to have you in the family and hope your stay in Grove is a pleasant one. If you need any help, with anything, don\'t hesitate to <a href="#">contact us</a>.</p><a class="button" href="customize.php?">Customize Theme</a> </div>';
-	
+	echo (get_template_directory() . '/inc/theme-options/theme-options.php' );
 }
 
 require( get_template_directory() . '/inc/customizer.php' );
-
-function wp_make_content() {
-    global $wp_admin_bar, $wpdb;
-    if ( !is_super_admin() || !is_admin_bar_showing() )
-        return;
-   
-    $wp_admin_bar->add_menu( array( 'id' => 'make_content', 'title' => __( 'Make Content', 'textdomain' ), 'href' => '/wp-admin/admin.php?page=make-content' ) );
-
-}
-add_action( 'admin_bar_menu', 'wp_make_content', 1000 );
 
 add_action('admin_init', function() {
   wp_register_style('grove_cust_st', get_template_directory_uri() . '/style-cust.css', null, "1.0.0", "all");
@@ -210,14 +195,10 @@ add_action('admin_init', function() {
   
 });
 
-//add action to do_meta_boxes to revove the "Slide URL metabox"
-add_action( 'do_meta_boxes', 'remove_wooslider_url_box' );
-function remove_wooslider_url_box()
-{
-	remove_meta_box( 'wooslider-url', 'slide', 'side' ); // Remove Edit Flow Editorial Metadata
-}
 
 add_action( 'after_setup_theme', 'woocommerce_support' );
 function woocommerce_support() {
     add_theme_support( 'woocommerce' );
+
+
 }
